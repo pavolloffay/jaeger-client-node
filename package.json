@@ -22,9 +22,12 @@
     "faucet": "0.0.1",
     "mocha": "^3.0.1",
     "nyc": "2.4.0",
-    "sinon": "^1.17.5"
+    "sinon": "^1.17.5",
+    "uber-licence": "^2.0.2"
   },
   "scripts": {
+    "add-licence": "./node_modules/.bin/uber-licence",
+    "check-licence": "./node_modules/.bin/uber-licence --dry",
     "check-ls": "npm ls --loglevel=http --parseable 1>/dev/null && echo '# npm is in a good state'",
     "test": "npm run lint && ./node_modules/mocha/bin/mocha --compilers js:babel-core/register",
     "compile": "babel --presets es2015 -d dist/ src/",
