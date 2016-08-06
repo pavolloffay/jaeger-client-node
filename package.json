@@ -30,8 +30,8 @@
     "uber-licence": "^2.0.2"
   },
   "scripts": {
-    "add-licence": "./node_modules/.bin/uber-licence",
-    "check-licence": "./node_modules/.bin/uber-licence --dry",
+    "add-license": "./node_modules/.bin/uber-licence",
+    "check-license": "./node_modules/.bin/uber-licence --dry",
     "check-ls": "npm ls --loglevel=http --parseable 1>/dev/null && echo '# npm is in a good state'",
     "compile": "babel --presets es2015 --plugins transform-class-properties -d dist/ src/",
     "cover": "./node_modules/.bin/babel-node ./node_modules/.bin/babel-istanbul cover ./node_modules/.bin/_mocha -- test/",
