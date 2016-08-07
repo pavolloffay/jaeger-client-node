@@ -10,7 +10,8 @@
       "name": "oibe"
     }
   ],
-  "dependencies": {},
+  "dependencies": {
+  },
   "devDependencies": {
     "babel-cli": "^6.11.4",
     "babel-istanbul": "^0.11.0",
