@@ -19,20 +19,31 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-export default class ConstSampler {
-    _decision: boolean;
+declare type Endpoint = {
+    ipv4: number,
+    port: number,
+    serviceName: string
+};
 
-    constructor(decision: boolean) {
-        this._decision = decision;
-    }
+declare type Annotation = {
+    timestamp: number,
+    value: string,
+    host: Endpoint
+};
 
-    isSampled(): boolean {
-        return this._decision;
-    }
+declare type BinaryAnnotation = {
+    key: string,
+    value: any,
+    annotationType: string,
+    host?: Endpoint
+};
 
-    close(callback: Function): void {
-        if (callback) {
-            callback();
-        }
-    }
-}
+declare class Span {};
+
+declare type spanFields = {
+    operationName: string,
+    timestamp?: number,
+    event: string,
+    payload: any,
+    peer: Endpoint
+};

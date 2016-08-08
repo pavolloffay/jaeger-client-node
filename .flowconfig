@@ -1,0 +1,9 @@
+[include]
+./node_modules/
+
+[libs]
+./src/interfaces/
+./src/decls/
+
+[options]
+unsafe.enable_getters_and_setters=true

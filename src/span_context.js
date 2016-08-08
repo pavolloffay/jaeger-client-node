@@ -19,6 +19,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+declare var it;
 import * as constants from './constants.js';
 import Utils from './util.js';
 import Int64 from 'node-int64';
@@ -104,14 +105,13 @@ export default class SpanContext {
         ].join(':');
     }
 
-    static fromString(serializedString: string): SpanContext {
+    static fromString(serializedString: string): any {
         var bufferValueOne: any = Utils.encodeInt64(1);
 
         let headers:  any = serializedString.split(':');
         if (headers.length !== 4) {
             return null;
         }
-
 
         // TODO: eliminate this try/catch by verifying data here before calling
         // encodeInt64; any other source of thrown error here is a programming

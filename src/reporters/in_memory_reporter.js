@@ -19,19 +19,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-export default class ConstSampler {
-    _decision: boolean;
+export default class InMemoryReporter {
+    _spans: Array<Span>;
 
-    constructor(decision: boolean) {
-        this._decision = decision;
+    constructor() {
+        this._spans = [];
     }
 
-    isSampled(): boolean {
-        return this._decision;
+    report(span: Span): void {
+        this._spans.push(span);
+    }
+
+    get spans(): Array<Span> {
+        return this._spans;
     }
 
     close(callback: Function): void {
-        if (callback) {
+        if(callback) {
             callback();
         }
     }

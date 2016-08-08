@@ -19,20 +19,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-export default class ConstSampler {
-    _decision: boolean;
-
-    constructor(decision: boolean) {
-        this._decision = decision;
-    }
-
-    isSampled(): boolean {
-        return this._decision;
-    }
-
-    close(callback: Function): void {
-        if (callback) {
-            callback();
-        }
-    }
+declare interface Sampler {
+    isSampled(): boolean;
+    close(callback: Function): void;
 }

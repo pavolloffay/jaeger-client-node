@@ -19,20 +19,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-export default class ConstSampler {
-    _decision: boolean;
+export const CLIENT_SEND = 'cs';
+export const CLIENT_RECV = 'cr';
+export const SERVER_SEND = 'ss';
+export const SERVER_RECV = 'sr';
+export const WIRE_SEND = 'ws';
+export const WIRE_RECV = 'wr';
+export const CLIENT_SEND_FRAGMENT = 'crf';
+export const SERVER_SEND_FRAGMENT = 'ssf';
+export const SERVER_RECV_FRAGMENT = 'srf';
+export const LOCAL_COMPONENT = 'lc';
+export const CLIENT_ADDR = 'ca';
+export const SERVER_ADDR = 'sa';
+export const annotationType = {
+    BOOL: 'BOOL',
+    BYTES: 'BYTES',
+    I16: 'I16',
+    I32: 'I32',
+    I64: 'I64',
+    DOUBLE: 'DOUBLE',
+    STRING: 'STRING'
+};
 
-    constructor(decision: boolean) {
-        this._decision = decision;
-    }
-
-    isSampled(): boolean {
-        return this._decision;
-    }
-
-    close(callback: Function): void {
-        if (callback) {
-            callback();
-        }
-    }
-}

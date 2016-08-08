@@ -19,15 +19,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-export default class ConstSampler {
-    _decision: boolean;
-
-    constructor(decision: boolean) {
-        this._decision = decision;
-    }
+export default class NoopSampler {
 
     isSampled(): boolean {
-        return this._decision;
+        return true;
     }
 
     close(callback: Function): void {
