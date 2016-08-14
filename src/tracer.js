@@ -21,6 +21,7 @@
 
 import assert from 'assert';
 import * as constants from './constants.js';
+import opentracing_constants from './opentracing-javascript/src/constants.js';
 import myLocalIp from 'my-local-ip';
 import NoopReporter from './reporters/noop_reporter.js';
 import NoopSampler from './samplers/noop_sampler.js';
@@ -37,6 +38,7 @@ export default class Tracer {
     _host: Endpoint;
     _tracerTags: any;
     _logger: any;
+    _propagators: any;
 
     constructor(serviceName: string,
             reporter: Reporter,
@@ -52,6 +54,7 @@ export default class Tracer {
         this._sampler = sampler || new NoopSampler();
         this._logger = logger;
         this._host = Utils.createEndpoint(serviceName, myLocalIp(), port);
+        this._propagators = {};
     }
 
     _createSpan(operationName: string,
@@ -114,15 +117,43 @@ export default class Tracer {
     }
 
     inject(spanContext: SpanContext, format: string, carrier: any): void {
+        switch (format) {
+            case opentracing_constants.FORMAT_HTTP_HEADERS:
+            case opentracing_constants.FORMAT_TEXT_MAP:
+                return this._propagators[format].inject(spanContext, carrier);
+            case this._interface.FORMAT_BINARY:
+                //log `Unsupported format: ${format}`;
+                return null;
+            default:
+                // log `Unsupported format: ${format}`;
+                return null;
+        }
     }
 
     // todo(oibe) clairfy what this should return
     extract(format: string, carrier: any): SpanContext {
+        switch (format) {
+            case opentracing_constants.FORMAT_HTTP_HEADERS:
+            case opentracing_constants.FORMAT_TEXT_MAP:
+                return this._propagators[format].extract(carrier);
+            case this._interface.FORMAT_BINARY:
+                //log `Unsupported format: ${format}`;
+                return null;
+            default:
+                // log `Unsupported format: ${format}`;
+                return null;
+        }
     }
 
     close(callback: Function): void {
+        var reporter = this._reporter;
+        this._reporter = NoopReporter();
+        reporter.close(() => {
+            this._sampler.close(callback);
+        });
     }
 
     flush(callback: Function): void {
+        this._reporter.flush(callback);
     }
 }

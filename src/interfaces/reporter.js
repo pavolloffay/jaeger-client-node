@@ -21,5 +21,6 @@
 
 declare interface Reporter {
     report(span: Span): void;
+    flush(callback:Function): void;
     close(callback: Function): void;
 }

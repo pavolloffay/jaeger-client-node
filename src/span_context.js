@@ -60,6 +60,10 @@ export default class SpanContext {
         return this._flags;
     }
 
+    get baggage(): any {
+        return this._baggage;
+    }
+
     _normalizeBaggageKey(key: string) {
         if (key in this._baggageHeaderCache) {
             return this._baggageHeaderCache[key];

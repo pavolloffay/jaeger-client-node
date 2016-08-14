@@ -25,12 +25,15 @@ import Int64 from 'node-int64';
 
 export default class Utils {
 
+    static startsWith(text: string, prefix: string): boolean {
+        return text.indexOf(prefix) === 0;
+    }
+
     static getRandom64(): ArrayBuffer {
-        let randint: any = xorshift.randomint();
-        let buf: ArrayBuffer = new ArrayBuffer(8);
-        let dataview: DataView = new DataView(buf);
-        dataview.setUint32(0, randint[0], false);
-        dataview.setUint32(4, randint[1], false);
+        let randint = xorshift.randomint();
+        let buf = Buffer(8);
+        buf.writeUInt32BE(randint[0], 0);
+        buf.writeUInt32BE(randint[1], 4);
         return buf;
     }
 
@@ -126,7 +129,12 @@ export default class Utils {
 
 
     static createBooleanTag(key: string, value: boolean): BinaryAnnotation {
-        return this.createBinaryAnnotation(key, value, thrift.annotationType.BOOL);
+        let booleanValue = '0x0';
+        if (value) {
+            booleanValue = '0x01';
+        }
+
+        return this.createBinaryAnnotation(key, booleanValue, thrift.annotationType.BOOL);
     }
 
     static createStringTag(key: string, value: string): BinaryAnnotation {

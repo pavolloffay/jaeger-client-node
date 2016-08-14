@@ -1,7 +1,7 @@
 export const SAMPLED_MASK = 0x1;
 export const DEBUG_MASK = 0x2;
-export const headerName = 'UBER-TRACE-ID';
-export const headerPrefix = 'UberCtx-';
+export const TRACER_STATE_HEADER_NAME = 'UBER-TRACE-ID';
+export const TRACER_BAGGAGE_HEADER_PREFIX = 'UberCtx-';
 export const DEFAULT_FLUSH_LENGTH = 10;
 export const DEFAULT_INITIAL_SAMPLE_RATE = 0.001;
 export const SAMPLER_REFRESH_INTERVAL = 60000;

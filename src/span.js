@@ -28,7 +28,7 @@ export default class Span {
     _tracer: any;
     _name: string;
     _spanContext: SpanContext;
-    _timestamp: number;
+    _start: number;
     _duration: number;
     _port: number;
     _isClient: boolean;
@@ -40,8 +40,8 @@ export default class Span {
     constructor(tracer: any,
                 name: string,
                 spanContext: SpanContext,
-                timestamp: number,
-                isClient: boolean,
+                start: number,
+                isClient: boolean = false,
                 peer: Endpoint,
                 annotations: Array<Annotation> = [],
                 binaryAnnotations: Array<BinaryAnnotation> = []
@@ -49,7 +49,7 @@ export default class Span {
         this._tracer = tracer;
         this._name = name;
         this._spanContext = spanContext;
-        this._timestamp = timestamp;
+        this._start = start;
         this._duration = 0;
         this._port = 0;
         this._isClient = isClient;
@@ -79,9 +79,9 @@ export default class Span {
         assert(!this._ended, "You can only call finish() on span once");
         this._ended = true;
 
-        if (this._spanContext.IsSampled() && this._timestamp) {
+        if (this._spanContext.IsSampled() && this._start) {
             let endTime = finishTime || Utils.getTimestamp();
-            this._duration = endTime - this._timestamp;
+            this._duration = endTime - this._start;
             this.log({
                 event: this._isClient ? thrift.CLIENT_RECV : thrift.SERVER_SEND,
                 timestamp: endTime
@@ -118,8 +118,7 @@ export default class Span {
 
             if (!fields.event && !fields.payload) {
                 throw new Error('log must be passed either an event of type string, or a payload of type object');
-            }
-
+            } 
             let value = fields.event || JSON.stringify(fields.payload);
             let logData = Utils.createLogData(fields.timestamp, value);
 
