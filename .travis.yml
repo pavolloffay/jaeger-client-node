@@ -59,7 +59,15 @@ script:
     make test-without-build;
     nvm use $TRAVIS_NODE_VERSION;
     fi
-- if [ "$COVER" = "1" ]; then npm run coveralls ; fi
+- if [ "$COVER" = "1" ]; then
+    make build-node;
+    nvm use $TEST_NODE_VERSION;
+    node --version;
+    rm -rf ./node_modules;
+    npm install;
+    npm run coveralls;
+    nvm use $TRAVIS_NODE_VERSION;
+    fi
 - if [ "$CROSSDOCK" = "1" ]; then make crossdock-fresh ; fi
 
 after_failure:
