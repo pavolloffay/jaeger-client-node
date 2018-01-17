@@ -11,7 +11,7 @@
 // the License.
 
 import {expect} from 'chai';
-import entrypoint from '../../entrypoint';
+import entrypoint from '../entrypoint';
 
 describe('entrypoint', () => {
     it ('should import and create objects without error', () => {
